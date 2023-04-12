@@ -1,0 +1,32 @@
+
+.champ-container__champ {
+  border: 4px solid #222831;
+  border-radius: 5px;
+  background-color: #151515;
+  padding: 2rem;
+  user-select: none;
+}
+
+.champ {
+  &__name {
+    font-size: 2.2rem;
+    text-align: center;
+  }
+  
+  &__art {
+    border-radius: 5px;
+  }
+  
+  &__info {
+    padding: 1rem 0;    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    p {
+      text-align: justify;
+    }
+  }
+}
+

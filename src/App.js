@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { ChampContainer } from "./components/ChampContainer";
+import { Header } from "./components/Header";
+import { getAllChamps } from "./services/champs/getAllChamps";
 
 function App() {
+  const [champs, setChamps] = useState([]); 
+  const [tags, setTags] = useState([]); 
+
+  const unique = (value, index, self) => {
+    return self.indexOf(value) === index;
+  }
+
+  useEffect(() => {
+    getAllChamps()
+      .then(data => {      
+        const keys = Object.keys(data); 
+        keys.forEach(key => {
+          setChamps(prev => prev.concat(data[key]));
+          setTags(prev => prev.concat("All"));
+          setTags(prev => (prev.concat(data[key].tags)).sort());
+        })
+      })
+  }, [])  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header
+        title={"League of legends champs"} /> 
+
+      <ChampContainer
+        champs={champs}
+        tags={tags.filter(unique)} />             
     </div>
   );
 }
